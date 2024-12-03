@@ -18,4 +18,4 @@ jobs:
           python-version: '3.9' # or your desired version
 
       - name: Run Python script
-        run: python ../main.py
+        run: python main.py
