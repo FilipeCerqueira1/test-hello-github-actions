@@ -18,4 +18,7 @@ jobs:
           python-version: '3.9' # or your desired version
 
       - name: Run Python script
+        env:
+          USER_NAME: ${{ github.event.client_payload.name }}
+          USER_EMAIL: ${{ github.event.client_payload.email }}
         run: python main.py
