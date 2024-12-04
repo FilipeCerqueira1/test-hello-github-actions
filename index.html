@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trigger GitHub Action</title>
+    <script>
+        async function triggerAction() {
+            const token = 'YOUR_PERSONAL_ACCESS_TOKEN'; // Use the secret below securely
+            const repoOwner = 'YOUR_USERNAME';
+            const repoName = 'YOUR_REPOSITORY_NAME';
+
+            const url = `https://api.github.com/repos/${repoOwner}/${repoName}/dispatches`;
+
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.everest-preview+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ event_type: 'trigger-action' })
+            });
+
+            if (response.ok) {
+                alert('GitHub Action triggered successfully!');
+            } else {
+                alert('Failed to trigger GitHub Action.');
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>GitHub Pages Trigger</h1>
+    <button onclick="triggerAction()">Trigger GitHub Action</button>
+</body>
+</html>
