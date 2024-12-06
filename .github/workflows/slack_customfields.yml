@@ -4,42 +4,42 @@ on:
   workflow_dispatch:
     inputs:
       script_argument1:
-        description: 'Capability to be checked' # Describe the dropdown field
-        required: true # Make the field mandatory
-        type: choice # Specify this as a dropdown
-        options: # Define the dropdown options
+        description: 'Capability to be checked'
+        required: true
+        type: choice
+        options:
           - cap-bet-building-and-placement
           - cap-search
           - cap-same-game-multi
           - cap-bet-overlay
           - cap-account-session-and-wallet-proxy
           - cap-bet-lifecycle
-        default: cap-bet-building-and-placement # Set the default value
-        
+        default: cap-bet-building-and-placement
+
       script_argument2:
         description: 'Number of days back to search for PRs'
         required: false
         default: '15'
 
       script_argument3:
-        description: 'Status of PRs to search for (open/closed/open_draft/all)' # Describe the dropdown field
-        required: true # Make the field mandatory
-        type: choice # Specify this as a dropdown
-        options: # Define the dropdown options
+        description: 'Status of PRs to search for (open/closed/open_draft/all)'
+        required: true
+        type: choice
+        options:
           - open
           - closed
           - open_draft
           - all
-        default: open # Set the default value
+        default: open
 
       script_argument4:
-        description: 'Type of date of PR to look at (created/updated)' # Describe the dropdown field
-        required: true # Make the field mandatory
-        type: choice # Specify this as a dropdown
-        options: # Define the dropdown options
+        description: 'Type of date of PR to look at (created/updated)'
+        required: true
+        type: choice
+        options:
           - created
           - updated
-        default: updated # Set the default value
+        default: updated
 
   repository_dispatch:
     types: [run-python-script]
@@ -56,6 +56,11 @@ jobs:
         with:
           python-version: '3.9' # or your desired version
 
-      - name: Run Python script with arguments
+      - name: Run Python script with arguments and secret
+        env:
+          SECRET_KEY: ${{ secrets.KEY1_REPO_PERMS_ONLY }} # Pass the secret as an environment variable
         run: |
-          python main.py "${{ github.event.inputs.script_argument1 }}" "${{ github.event.inputs.script_argument2 }}" "${{ github.event.inputs.script_argument3 }}" "${{ github.event.inputs.script_argument4 }}"
+          python main.py "${{ github.event.inputs.script_argument1 }}" \
+                         "${{ github.event.inputs.script_argument2 }}" \
+                         "${{ github.event.inputs.script_argument3 }}" \
+                         "${{ github.event.inputs.script_argument4 }}"
