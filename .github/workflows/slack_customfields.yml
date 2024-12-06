@@ -41,6 +41,16 @@ on:
           - updated
         default: updated
 
+      email:
+        description: 'Email of the user'
+        required: true
+        default: ''
+
+      name:
+        description: 'Name of the user'
+        required: true
+        default: ''
+
   repository_dispatch:
     types: [run-python-script]
 
@@ -63,4 +73,6 @@ jobs:
           python main.py "${{ github.event.inputs.script_argument1 }}" \
                          "${{ github.event.inputs.script_argument2 }}" \
                          "${{ github.event.inputs.script_argument3 }}" \
-                         "${{ github.event.inputs.script_argument4 }}"
+                         "${{ github.event.inputs.script_argument4 }}" \
+                         "${{ github.event.inputs.email }}" \
+                         "${{ github.event.inputs.name }}"
